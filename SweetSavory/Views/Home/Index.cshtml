@@ -19,15 +19,16 @@
 <hr>
 
 <h3>Flavor options:</h3>
-@if(ViewBag.Flavors.Count == 0)
+@if (ViewBag.Flavors.Count == 0)
 {
     <p>There are no Flavors listed in the database.</p>
 }
-else{
-<p>Click one to see all treats on the menu that are associated with it.</p>
-@foreach (Flavor flavor in ViewBag.Flavors)
+else
+{
+    <p>Click one to see all treats on the menu that are associated with it.</p>
+    @foreach (Flavor flavor in ViewBag.Flavors)
     {
-    <h5> @Html.ActionLink($"{flavor.Name}", "Details", "Flavors", new { id = flavor.FlavorId}) </h5>
+        <h5> @Html.ActionLink($"{flavor.Name}", "Details", "Flavors", new { id = flavor.FlavorId}) </h5>
     }
 }
 <hr>
@@ -36,9 +37,20 @@ else{
 {
     <p>@Html.ActionLink("Create a Treat for the Menu", "Create", "Treats")</p>
     <p>@Html.ActionLink("Add a Flavor", "Create", "Treat")</p>
-<hr>
+    <hr>
 }
 
-<p>@Html.ActionLink("Register Account", "Register", "Account")</p>
-<p>@Html.ActionLink("Log In", "Login", "Account")</p>
+@if (User.Identity.IsAuthenticated)
+{
+    @using (Html.BeginForm("LogOff", "Account"))
+    {
+        <input type="submit" value="Log out" />
+    }
+}
+else
+{
+    <p>@Html.ActionLink("Register Account", "Register", "Account")</p>
+    <p>@Html.ActionLink("Log In", "Login", "Account")</p>
+}
+
 

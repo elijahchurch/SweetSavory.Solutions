@@ -6,13 +6,13 @@ using SweetSavory.ViewModels;
 
 namespace SweetSavory.Controllers
 {
-    public class AccountController: Controller
+    public class AccountController : Controller
     {
         private readonly SweetSavoryContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController (UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, SweetSavoryContext db)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, SweetSavoryContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -25,27 +25,27 @@ namespace SweetSavory.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register (RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
             else
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Email};
+                ApplicationUser user = new ApplicationUser { UserName = model.Email };
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     Microsoft.AspNetCore.Identity.SignInResult signResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
-                    if(signResult.Succeeded)
+                    if (signResult.Succeeded)
                     {
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
                         return RedirectToAction("Login");
-                    }                    
+                    }
                 }
                 else
                 {
@@ -71,19 +71,26 @@ namespace SweetSavory.Controllers
             {
                 return View(model);
             }
-            else 
+            else
             {
                 Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "There is something wrong with your email. Please try again.");
-                        return View(model);
-                    }
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "There is something wrong with your email. Please try again.");
+                    return View(model);
+                }
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> LogOff()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
