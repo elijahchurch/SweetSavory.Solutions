@@ -1,0 +1,46 @@
+@{
+    Layout ="_Layout";
+}
+
+@using SweetSavory.Models
+@model SweetSavory.Models.Treat
+
+<h2>@Model.Name</h2>
+<hr>
+<h3>Price: $@Model.Price</h3>
+<p>@Model.Description</p>
+<h4>Flavors:</h4>
+@if (Model.JoinTable.Count == 0)
+{
+    <p>There are no flavors that are associated with this treat.</p>
+}
+@foreach (TreatFlavor entry in Model.JoinTable)
+{
+    <h5>@Html.ActionLink($"{entry.Flavor.Name}", "Details", "Flavors", new { id = entry.Flavor.FlavorId})</h5>
+    @if(User.Identity.IsAuthenticated)
+    {
+        @using (Html.BeginForm("DeleteJoin", "Treats"))
+        {
+            @Html.Hidden("joinId", entry.TreatFlavorId)
+            <input type="submit" value="Remove">
+        }
+    }
+}
+<hr>
+
+@if(User.Identity.IsAuthenticated)
+{
+@using (Html.BeginForm("AddFlavor", "Treats"))
+{
+    @Html.HiddenFor(model => model.TreatId)
+    @Html.Label("Add a Flavor to this treat")
+    @Html.DropDownList("FlavorId")
+    <input type="submit" value="Save">
+}
+
+<p>@Html.ActionLink("Edit Treat", "Edit", "Treats")</p>
+<p>@Html.ActionLink("Delete Treat", "Delete", "Treats")</p>
+<hr>
+
+}
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
