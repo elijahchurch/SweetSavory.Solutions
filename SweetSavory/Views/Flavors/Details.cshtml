@@ -17,7 +17,7 @@
     <h5>@Html.ActionLink($"{entry.Treat.Name}", "Details", "Treats", new { id = entry.Treat.TreatId})</h5>
     @if(User.Identity.IsAuthenticated)
     {
-        @using (Html.BeginForm("DeleteJoin", "Treats"))
+        @using (Html.BeginForm("DeleteJoin", "Flavors"))
         {
             @Html.Hidden("joinId", entry.TreatFlavorId)
             <input type="submit" value="Remove">

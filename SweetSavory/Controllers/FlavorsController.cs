@@ -48,6 +48,15 @@ namespace SweetSavory.Controllers
         ViewBag.Title = flavorModel.Name;
         return View(flavorModel);
         }
+
+        [HttpPost]
+        public ActionResult DeleteJoin(int joinId)
+        {
+            TreatFlavor joinEntry = _db.TreatFlavors.FirstOrDefault(joinEntry => joinEntry.TreatFlavorId == joinId);
+            _db.TreatFlavors.Remove(joinEntry);
+            _db.SaveChanges();
+            return RedirectToAction("Details", new {id = joinEntry.FlavorId});
+        }
     }
 
 
