@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
+
 namespace SweetSavory.Controllers
 {
     public class TreatsController : Controller
@@ -49,6 +50,21 @@ namespace SweetSavory.Controllers
             ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Name");
             return View(treatModel);
         }
+
+        [HttpPost]
+        public ActionResult AddFlavor(Treat treat, int flavorId)
+        {
+            #nullable enable
+            TreatFlavor? joinEntry = _db.TreatFlavors.FirstOrDefault(entry  =>(entry.TreatId == treat.TreatId && entry.FlavorId == flavorId));
+            #nullable disable
+            if (joinEntry == null && flavorId != 0)
+            {
+                _db.TreatFlavors.Add(new TreatFlavor() { TreatId = treat.TreatId, FlavorId = flavorId });
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Details", new {id = treat.TreatId});
+        }
+
     }
 
 
