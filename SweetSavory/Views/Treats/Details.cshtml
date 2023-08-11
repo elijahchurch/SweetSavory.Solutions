@@ -38,8 +38,8 @@
     <input type="submit" value="Save">
 }
 
-<p>@Html.ActionLink("Edit Treat", "Edit", "Treats")</p>
-<p>@Html.ActionLink("Delete Treat", "Delete", "Treats")</p>
+<p>@Html.ActionLink("Edit Treat", "Edit", new {id = Model.TreatId})</p>
+<p>@Html.ActionLink("Delete Treat", "Delete", new {id = Model.TreatId})</p>
 <hr>
 
 }
