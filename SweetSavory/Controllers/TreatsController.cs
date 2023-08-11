@@ -97,6 +97,23 @@ namespace SweetSavory.Controllers
             }
         }
 
+        [Authorize]
+        public ActionResult Delete(int id)
+        {
+        ViewBag.Title = "Delete Treat";
+        Treat treatModel = _db.Treats.FirstOrDefault(entry => entry.TreatId == id);
+        return View(treatModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirm(int id)
+        {
+            Treat targetTreat = _db.Treats.FirstOrDefault(entry => entry.TreatId == id);
+            _db.Treats.Remove(targetTreat);
+            _db.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 
 
