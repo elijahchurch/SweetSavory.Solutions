@@ -1,0 +1,32 @@
+@{
+    Layout ="_Layout";
+}
+
+@using SweetSavory.Models
+
+<h2>@Model.Name</h2>
+<hr>
+
+<h4>Treats with with Flavor:</h4>
+@if (Model.JoinTable.Count == 0)
+{
+    <p>There are no treats that are associated with this flavor.</p>
+}
+@foreach (TreatFlavor entry in Model.JoinTable)
+{
+    <h5>@Html.ActionLink($"{entry.Treat.Name}", "Details", "Treats", new { id = entry.Treat.TreatId})</h5>
+    @if(User.Identity.IsAuthenticated)
+    {
+        @using (Html.BeginForm("DeleteJoin", "Treats"))
+        {
+            @Html.Hidden("joinId", entry.TreatFlavorId)
+            <input type="submit" value="Remove">
+        }
+    }
+}
+
+
+<hr>
+<p>@Html.ActionLink("Edit Flavor Name", "Edit", "Flavors")</p>
+<p>@Html.ActionLink("Delete Flavor", "Delete", "Flavors")</p>
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>

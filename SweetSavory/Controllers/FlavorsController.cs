@@ -38,6 +38,16 @@ namespace SweetSavory.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+        public ActionResult Details (int id)
+        {
+        Flavor flavorModel = _db.Flavors
+                    .Include(entry => entry.JoinTable)
+                    .ThenInclude(entry => entry.Treat)
+                    .FirstOrDefault(entry => entry.FlavorId == id);
+        ViewBag.Title = flavorModel.Name;
+        return View(flavorModel);
+        }
     }
 
 
