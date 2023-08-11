@@ -1,0 +1,17 @@
+@{
+    Layout = "_Layout";
+}
+
+@model SweetSavory.Models.Flavor
+
+<h2>Delete Flavor: @Model.Name</h2>
+<hr>
+
+
+<h3>If you are sure you want to delete this entry, click "Delete". Otherwise, go back.</h3>
+@using (Html.BeginForm())
+{
+    <input type="submit" value="Delete" />
+}
+<hr>
+<p>@Html.ActionLink("Back", "Details", new { id = Model.FlavorId})</p>

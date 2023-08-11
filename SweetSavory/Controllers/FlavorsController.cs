@@ -80,6 +80,24 @@ namespace SweetSavory.Controllers
             return RedirectToAction("Details", new {id = flavor.FlavorId});
             }
         }
+
+        [Authorize]
+        public ActionResult Delete(int id)
+        {
+        ViewBag.Title = "Delete Flavor";
+        Flavor flavorModel = _db.Flavors.FirstOrDefault(entry => entry.FlavorId == id);
+        return View(flavorModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirm(int id)
+        {
+            Flavor targetFlavor = _db.Flavors.FirstOrDefault(entry => entry.FlavorId == id);
+            _db.Flavors.Remove(targetFlavor);
+            _db.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 
 
