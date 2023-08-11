@@ -10,7 +10,7 @@
 <h3>Treat Menu</h3>
 @if (ViewBag.Treats.Count == 0)
 {
-    <p>There are currently no treat options available.</p>
+    <p>There are currently no treats created for this menu.</p>
 }
 @foreach (Treat treat in ViewBag.Treats)
 {
@@ -21,7 +21,7 @@
 <h3>Flavor options:</h3>
 @if (ViewBag.Flavors.Count == 0)
 {
-    <p>There are no Flavors listed in the database.</p>
+    <p>There are no flavors listed in the database.</p>
 }
 else
 {
