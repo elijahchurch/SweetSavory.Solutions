@@ -46,7 +46,23 @@ namespace SweetSavory.Controllers
                     .ThenInclude(entry => entry.Treat)
                     .FirstOrDefault(entry => entry.FlavorId == id);
         ViewBag.Title = flavorModel.Name;
+        ViewBag.Treatlist = _db.Treats.ToList();
+        ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "Name");
         return View(flavorModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddTreat(Flavor flavor, int treatId)
+        {
+            #nullable enable
+            TreatFlavor? joinEntry = _db.TreatFlavors.FirstOrDefault(entry  =>(entry.TreatId == treatId && entry.FlavorId == flavor.FlavorId));
+            #nullable disable
+            if (joinEntry == null && treatId != 0)
+            {
+                _db.TreatFlavors.Add(new TreatFlavor() { TreatId = treatId, FlavorId = flavor.FlavorId });
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Details", new {id = flavor.FlavorId});
         }
 
         [HttpPost]
