@@ -7,16 +7,16 @@
 
 <h2>@Model.Name</h2>
 <hr>
-<h3>Price: $@Model.Price</h3>
 <p>@Model.Description</p>
-<h4>Flavors:</h4>
+<h3>Price: $@Model.Price</h3>
+<h3>Flavors:</h3>
 @if (Model.JoinTable.Count == 0)
 {
     <p>There are no flavors that are associated with this treat.</p>
 }
 @foreach (TreatFlavor entry in Model.JoinTable)
 {
-    <h5>@Html.ActionLink($"{entry.Flavor.Name}", "Details", "Flavors", new { id = entry.Flavor.FlavorId})</h5>
+    <h4>@Html.ActionLink($"{entry.Flavor.Name}", "Details", "Flavors", new { id = entry.Flavor.FlavorId})</h4>
     @if(User.Identity.IsAuthenticated)
     {
         @using (Html.BeginForm("DeleteJoin", "Treats"))
