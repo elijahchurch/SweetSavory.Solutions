@@ -30,13 +30,16 @@
 
 @if(User.Identity.IsAuthenticated)
 {
-@using (Html.BeginForm("AddFlavor", "Treats"))
-{
-    @Html.HiddenFor(model => model.TreatId)
-    @Html.Label("Add a Flavor to this treat")
-    @Html.DropDownList("FlavorId")
-    <input type="submit" value="Save">
-}
+    @if(ViewBag.Flavorlist.Count != 0)
+    {
+        @using (Html.BeginForm("AddFlavor", "Treats"))
+        {
+            @Html.HiddenFor(model => model.TreatId)
+            @Html.Label("Add a Flavor to this treat")
+            @Html.DropDownList("FlavorId")
+            <input type="submit" value="Save">
+        }
+    }
 
 <p>@Html.ActionLink("Edit Treat", "Edit", new {id = Model.TreatId})</p>
 <p>@Html.ActionLink("Delete Treat", "Delete", new {id = Model.TreatId})</p>

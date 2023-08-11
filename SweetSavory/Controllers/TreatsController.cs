@@ -47,6 +47,7 @@ namespace SweetSavory.Controllers
                         .ThenInclude(entry => entry.Flavor)
                         .FirstOrDefault(entry => entry.TreatId == id);
             ViewBag.Title = treatModel.Name;
+            ViewBag.Flavorlist = _db.Flavors.ToList();
             ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Name");
             return View(treatModel);
         }
