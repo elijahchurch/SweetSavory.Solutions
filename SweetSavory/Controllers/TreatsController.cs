@@ -74,6 +74,29 @@ namespace SweetSavory.Controllers
             return RedirectToAction("Details", new {id = joinEntry.TreatId});
         }
 
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            ViewBag.Title = "Edit Treat";
+            Treat treatModel = _db.Treats.FirstOrDefault(entry => entry.TreatId == id);
+            return View(treatModel);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Treat treat)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(treat);
+            }
+            else
+            {
+            _db.Treats.Update(treat);
+            _db.SaveChanges();
+            return RedirectToAction("Details", new {id = treat.TreatId});
+            }
+        }
+
     }
 
 
