@@ -37,7 +37,7 @@ namespace SweetSavory.Controllers
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    Microsoft.AspNetCore.Identity.SignInResult signResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, isPersistent: true, lockoutOnFailure: false);
+                    Microsoft.AspNetCore.Identity.SignInResult signResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                     if(signResult.Succeeded)
                     {
                         return RedirectToAction("Index", "Home");
