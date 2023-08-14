@@ -15,7 +15,7 @@
 * .NET
 
 ## Description:
-
+This application was made utilizing C# and its .Net framework. The site features information based on Treat and Flavor options at a fictional diner, which are stored in a database with a many-to-many relationship to each other. Anyone can access the application splash page and view a list(or details) of Treats and Flavor options, but a user must be authenticated and authorized to create, edit, or delete entries from either the Treats or Flavor tables in the database. Links to access create, edit or delete options are hidden behind a branching check to see if the user is authenticated, and the routes themselves have the "Authorize" attribute attached to them to prevent a user from reaching a view they don't have access to by typing in its URL route. Functionality for a user to register and then log in/off from an account is handled by utilizing Microsoft.AspNetCore.Identity. 
 
 ## Setup/ Installation Requirements
 
